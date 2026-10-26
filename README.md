@@ -19,6 +19,7 @@ The codebase is organized in the root directory and consists of the main optimiz
 *   **`plot_cv_boxplots.py`**: Runs a 10-seed, 5-fold cross-validation (50 iterations) to prove the statistical stability of the surrogate and plots the resulting boxplots (Figure 2).
 *   **`plot_ternary_contour.py`**: Generates a high-resolution ternary heatmap of the detonation pressure response surface and marks the best discovered RHO candidate (Figure 3).
 *   **`plot_thermochemical_barcharts.py`**: Dynamically calculates and plots the theoretical K-J performance of the optimal RHO candidate against the pure RDX and high-binder boundaries (Figure 4).
+*   **`Logs.txt`**: Contains the raw, unedited console execution output of the `PBX_RHO_optimizer.py` script. This file serves as transparent, verifiable proof of the computational results reported in the manuscript. It details the predictive metrics of the surrogate engines (MAE, RMSE, MAPE), the exact mean convergence and Wilcoxon signed-rank test p-values from the 30-run multi-seed topological benchmark, and the precise coordinates of the final optimal formulation candidate.
 
 ## Installation
 
