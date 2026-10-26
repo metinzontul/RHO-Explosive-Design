@@ -1,0 +1,20 @@
+runfile('C:/Users/ASUS-WORKSTATION/Desktop/metin/Yılmaz/src3/PBX_RHO_optimizer.py', wdir='C:/Users/ASUS-WORKSTATION/Desktop/metin/Yılmaz/src3')
+--- 1. Generating Thermochemical Dataset (Full Simplex) ---
+
+--- 2. Surrogate Model Benchmark Tests ---
+Ridge Regression -> P_Test R2: 0.9285 | MAPE: 82.31% | MAE: 1.75 GPa | RMSE: 2.14 GPa
+MLP Neural Network -> P_Test R2: 0.9997 | MAPE: 1.91% | MAE: 0.09 GPa | RMSE: 0.14 GPa
+Random Forest (RHO) -> P_Test R2: 0.9994 | MAPE: 1.77% | MAE: 0.13 GPa | RMSE: 0.20 GPa
+
+--- 3. Multi-Seed Global Benchmark (Topological Stagnation Test - 30 Runs) ---
+RHO (DE) Mean Pressure:       21.1035 GPa ± 0.0125
+Dual Annealing Mean Pressure: 20.8941 GPa ± 0.1353
+Basin-Hopping Mean Pressure:  21.0359 GPa ± 0.2597
+Wilcoxon Test (DE vs Dual Annealing) p-value: 3.7814e-06
+Wilcoxon Test (DE vs Basin-Hopping) p-value: 1.0326e-03
+
+--- 4. Final Optimal Compositions (Best Discovered Formulation per Algorithm) ---
+RHO (DE) Optimal        -> RDX: 74.68% | TNT: 10.31% | HTPB: 15.01% | P: 21.11 GPa
+
+--- Generating SHAP Plots ---
+SHAP plots successfully saved.
