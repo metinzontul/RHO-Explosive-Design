@@ -10,6 +10,9 @@ Tree-based machine learning surrogates (like Random Forest) inherently construct
 
 This repository empirically demonstrates this **topological mismatch** using Kamlet-Jacobs (K-J) thermochemical equations as a high-speed analytical sandbox. By employing a strictly gradient-free **Differential Evolution (DE)** algorithm operating on 2 degrees of freedom, the RHO framework successfully resists plateau-induced stagnation to isolate the true theoretical optimal formulation.
 
+## About the Dataset (Simulated Data)
+To strictly isolate and evaluate the topological mismatch between tree-based surrogates and gradient-reliant optimizers without the interference of experimental noise, our 1,500-sample training dataset was generated entirely via theoretical Kamlet-Jacobs (K-J) thermochemical simulations.
+
 ## Repository Contents
 
 The codebase is organized in the root directory and consists of the main optimization pipeline and visualization scripts:
