@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Thermochemical Evaluation Bar Charts for RHO Optimum
-Calculates values DYNAMICALLY from the verified K-J function. (No hardcoded/fabricated values).
+Calculates values DYNAMICALLY from the verified K-J function.
 
 Author: Prof. Dr. Metin Zontul
 Date: October 2026
@@ -14,7 +14,6 @@ plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = ['Times New Roman']
 plt.rcParams['font.size'] = 14  
 
-# --- Verified Kamlet-Jacobs Physical Baseline ---
 def calculate_KJ(w_rdx, w_tnt, w_htpb):
     total = w_rdx + w_tnt + w_htpb
     w_rdx, w_tnt, w_htpb = w_rdx/total, w_tnt/total, w_htpb/total
@@ -50,12 +49,12 @@ def calculate_KJ(w_rdx, w_tnt, w_htpb):
     D = 1.01 * np.sqrt(N_gas * np.sqrt(M_gas * Q)) * (1 + 1.30 * rho_mix) * 1000
     return P, D
 
-# Dynamically calculate values
 P_pure, D_pure = calculate_KJ(1.0, 0.0, 0.0)
 P_opt, D_opt = calculate_KJ(0.7468, 0.1031, 0.1501)
 P_inert, D_inert = calculate_KJ(0.55, 0.20, 0.25)
 
-labels = ['Pure RDX\n(Theoretical Baseline)', 'RHO Global Optimum\n(DE Candidate)', 'High-Binder Boundary\n(Inert)']
+# Updated Labels
+labels = ['Pure RDX\n(Theoretical Baseline)', 'RF-selected candidate\n(DE)', 'High-Binder Boundary\n(Inert)']
 pressures = [P_pure, P_opt, P_inert]
 velocities = [D_pure, D_opt, D_inert]
 
@@ -93,5 +92,5 @@ for bar in bars2:
 plt.tight_layout()
 fig.subplots_adjust(bottom=0.15) 
 
-plt.savefig('Figure4_Thermochemical_Comparison_Final.png', dpi=600, bbox_inches='tight')
+plt.savefig('Figure5_Thermochemical_Comparison_Revised.png', dpi=600, bbox_inches='tight')
 plt.show()

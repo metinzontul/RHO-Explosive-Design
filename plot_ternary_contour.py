@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Ternary Contour Plot Generator for RHO Optimum Formulation
-Updated with the verified Kamlet-Jacobs Physical Baseline.
+Updated with the verified Kamlet-Jacobs Physical Baseline and Constrained Region.
 
 Author: Prof. Dr. Metin Zontul
 Date: October 2026
@@ -17,11 +17,8 @@ plt.rcParams['font.size'] = 12
 
 scale = 100 
 
-# --- Verified Kamlet-Jacobs Physical Baseline ---
 def calculate_pressure(p):
     w_rdx, w_tnt, w_htpb = p[0]/scale, p[1]/scale, p[2]/scale
-    
-    # Epsilon to prevent division by zero during ternary grid edge cases
     w_rdx = max(w_rdx, 1e-6)
     w_tnt = max(w_tnt, 1e-6)
     w_htpb = max(w_htpb, 1e-6)
@@ -65,13 +62,19 @@ fig, ax = plt.subplots(figsize=(10, 8))
 tax = ternary.TernaryAxesSubplot(ax=ax, scale=scale)
 
 tax.heatmapf(calculate_pressure, boundary=True, style="triangular", cmap=cmap, colorbar=True)
-
 tax.boundary(linewidth=2.0)
 tax.gridlines(multiple=10, color="black", linestyle=":", linewidth=0.5)
 
-# Updated Optimum Point based on RHO (DE) Convergence 
+# Constrained Search Region (10-20% TNT, 15-25% HTPB)
+p1 = (75, 10, 15)
+p2 = (65, 20, 15)
+p3 = (55, 20, 25)
+p4 = (65, 10, 25)
+tax.plot([p1, p2, p3, p4, p1], linewidth=2.5, color='white', linestyle='--', label='Constrained Search Region')
+
+# Optimum Point
 optimum_point = (74.68, 10.31, 15.01)
-tax.scatter([optimum_point], marker='*', color='gold', edgecolor='black', s=400, zorder=10, label='Global Optimum (21.11 GPa)')
+tax.scatter([optimum_point], marker='*', color='gold', edgecolor='black', s=400, zorder=10, label='RF-selected candidate')
 
 tax.left_axis_label("HTPB Fraction (%)", fontsize=14, offset=0.14)
 tax.right_axis_label("TNT Fraction (%)", fontsize=14, offset=0.14)
@@ -80,10 +83,10 @@ tax.bottom_axis_label("RDX Fraction (%)", fontsize=14, offset=0.08)
 tax.ticks(axis='lbr', linewidth=1, multiple=10, tick_formats="%d")
 
 plt.title("RHO Detonation Pressure Surface (GPa)", fontsize=16, fontweight='bold', pad=30)
-tax.legend(loc='upper right')
+tax.legend(loc='upper right', framealpha=0.9)
 
 tax.clear_matplotlib_ticks()
 tax._redraw_labels()
 plt.tight_layout()
-plt.savefig('Figure3_Ternary_Plot.png', dpi=600, bbox_inches='tight')
+plt.savefig('Figure4_Ternary_Plot_Revised.png', dpi=600, bbox_inches='tight')
 plt.show()
