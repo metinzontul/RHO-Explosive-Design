@@ -1,0 +1,36 @@
+runfile('C:/Users/ASUS-WORKSTATION/Desktop/metin/Yılmaz/src4/PBX_RHO_optimizer.py', wdir='C:/Users/ASUS-WORKSTATION/Desktop/metin/Yılmaz/src4')
+--- 1. Generating Thermochemical Datasets ---
+Full-simplex dataset: 1500 samples | Local constrained validation set: 300 samples
+
+--- 2. Surrogate Model Benchmark Tests (Global Held-Out vs. Local Constrained) ---
+Ridge Regression     | Global -> R2: 0.9285, MAE: 1.746 GPa, RMSE: 2.139 GPa, MAPE: 82.31%
+                     | Local  -> R2: 0.3579, MAE: 1.240 GPa, RMSE: 1.371 GPa, MAPE: 7.51%
+MLP Neural Network   | Global -> R2: 0.9997, MAE: 0.092 GPa, RMSE: 0.139 GPa, MAPE: 1.91%
+                     | Local  -> R2: 0.9989, MAE: 0.042 GPa, RMSE: 0.058 GPa, MAPE: 0.24%
+Random Forest (RHO)  | Global -> R2: 0.9994, MAE: 0.128 GPa, RMSE: 0.202 GPa, MAPE: 1.77%
+                     | Local  -> R2: 0.9939, MAE: 0.103 GPa, RMSE: 0.134 GPa, MAPE: 0.58%
+RF Velocity (Local)  | Local  -> R2: 0.9964, MAE: 13.22 m/s, RMSE: 16.63 m/s
+
+--- 3. Budget-Matched Benchmark on Random Forest (Piecewise-Constant) Surrogate (30 Runs, Max NFEV=1000) ---
+DE (polish=False)            | Mean P: 21.0296 ± 0.0927 GPa | Best: (74.63/10.36/15.01%) [21.11 GPa] | Mean NFEV: 160.7 | Time: 391.6 ms | Reference
+Dual Annealing (L-BFGS-B)    | Mean P: 21.0618 ± 0.0839 GPa | Best: (74.69/10.30/15.02%) [21.11 GPa] | Mean NFEV: 1000.0 | Time: 2427.2 ms | p = 7.2670e-02
+Dual Annealing (No Local)    | Mean P: 21.0618 ± 0.0839 GPa | Best: (74.69/10.30/15.02%) [21.11 GPa] | Mean NFEV: 1000.0 | Time: 2325.3 ms | p = 7.2670e-02
+Basin-Hopping (L-BFGS-B)     | Mean P: 21.1075 ± 0.0001 GPa | Best: (74.67/10.33/15.00%) [21.11 GPa] | Mean NFEV: 123.0 | Time: 305.9 ms | p = 4.0424e-05
+Basin-Hopping (Nelder-Mead)  | Mean P: 21.1078 ± 0.0000 GPa | Best: (74.62/10.38/15.00%) [21.11 GPa] | Mean NFEV: 533.4 | Time: 1308.2 ms | p = 3.9539e-05
+
+--- 3. Budget-Matched Benchmark on MLP Neural Network (Smooth Continuous) Surrogate (30 Runs, Max NFEV=1000) ---
+DE (polish=False)            | Mean P: 21.0246 ± 0.0399 GPa | Best: (74.92/10.08/15.01%) [21.07 GPa] | Mean NFEV: 173.3 | Time: 13.4 ms | Reference
+Dual Annealing (L-BFGS-B)    | Mean P: 21.0857 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [21.09 GPa] | Mean NFEV: 1000.0 | Time: 69.4 ms | p = 1.8626e-09
+Dual Annealing (No Local)    | Mean P: 21.0546 ± 0.0239 GPa | Best: (74.98/10.01/15.00%) [21.08 GPa] | Mean NFEV: 1000.0 | Time: 68.8 ms | p = 7.9790e-04
+Basin-Hopping (L-BFGS-B)     | Mean P: 21.0857 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [21.09 GPa] | Mean NFEV: 217.9 | Time: 25.2 ms | p = 1.8626e-09
+Basin-Hopping (Nelder-Mead)  | Mean P: 21.0857 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [21.09 GPa] | Mean NFEV: 368.1 | Time: 27.0 ms | p = 1.8626e-09
+
+--- 4. Direct K-J Verification of Top-5 Distinct DE Candidates on RF Surrogate ---
+Rank 1: RDX=74.63%, TNT=10.36%, HTPB=15.01% | RF_P=21.11 GPa, Direct_KJ_P=20.99 GPa (|Diff|=0.12 GPa) | RF_D=7193.04 m/s, Direct_KJ_D=7194.10 m/s
+Rank 2: RDX=74.57%, TNT=10.42%, HTPB=15.02% | RF_P=21.11 GPa, Direct_KJ_P=20.98 GPa (|Diff|=0.12 GPa) | RF_D=7193.04 m/s, Direct_KJ_D=7193.13 m/s
+Rank 3: RDX=74.69%, TNT=10.31%, HTPB=15.00% | RF_P=21.11 GPa, Direct_KJ_P=21.00 GPa (|Diff|=0.11 GPa) | RF_D=7193.04 m/s, Direct_KJ_D=7195.94 m/s
+Rank 4: RDX=74.49%, TNT=10.51%, HTPB=15.00% | RF_P=21.11 GPa, Direct_KJ_P=20.98 GPa (|Diff|=0.13 GPa) | RF_D=7193.04 m/s, Direct_KJ_D=7192.84 m/s
+Rank 5: RDX=74.73%, TNT=10.26%, HTPB=15.01% | RF_P=21.11 GPa, Direct_KJ_P=21.00 GPa (|Diff|=0.10 GPa) | RF_D=7193.88 m/s, Direct_KJ_D=7196.20 m/s
+
+--- 5. Generating TreeSHAP Plots ---
+SHAP plots successfully saved.
