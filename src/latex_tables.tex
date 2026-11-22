@@ -1,0 +1,146 @@
+\newcolumntype{C}{>{\centering\arraybackslash}X}  % as in the MDPI template; harmless if already defined
+
+\begin{table}[H]
+\caption{Direct K--J pressure of the candidate returned by each of the 30 runs. Search score: mean value of the
+objective used during search (RF, MLP or direct K--J pressure). K--J columns: direct K--J pressure at the returned
+composition (common outcome); SD with $\mathrm{ddof}=0$, as in Table 3. Gap: mean distance from the maximum direct
+K--J pressure in the search region (21.0368 GPa, $501\times501$ grid). $|\Delta P|$: mean absolute difference between
+search score and direct K--J pressure. All pressures in GPa. DE, Differential Evolution (polish=False); DA, Dual Annealing; BH, Basin-Hopping; local search in parentheses (N--M, Nelder--Mead).\label{tab5}}
+\begin{adjustwidth}{-\extralength}{0cm}
+\small
+\begin{tabularx}{\fulllength}{llCCCCCCCC}
+\toprule
+\textbf{Objective} & \textbf{Solver} & \textbf{Search score} & \textbf{K--J mean} & \textbf{K--J SD} & \textbf{K--J min} & \textbf{K--J max} & \textbf{Gap} & \textbf{$|\Delta P|$} & \textbf{NFEV}\\
+\midrule
+RF & DE (none) & 21.0625 & 20.9660 & 0.0505 & 20.8069 & 21.0226 & 0.0707 & 0.0965 & 198.0\\
+ & DA (L-BFGS-B) & 21.0642 & 20.9919 & 0.0194 & 20.9390 & 21.0273 & 0.0449 & 0.0723 & 1000.0\\
+ & DA (none) & 21.0642 & 20.9919 & 0.0194 & 20.9390 & 21.0273 & 0.0449 & 0.0723 & 1000.0\\
+ & BH (L-BFGS-B) & 21.0774 & 21.0331 & 0.0103 & 20.9909 & 21.0368 & 0.0037 & 0.0443 & 123.0\\
+ & BH (N--M) & 21.0792 & 20.9951 & 0.0137 & 20.9855 & 21.0256 & 0.0417 & 0.0841 & 530.1\\
+\midrule
+MLP & DE (none) & 20.8451 & 20.9876 & 0.0332 & 20.8933 & 21.0277 & 0.0491 & 0.1426 & 182.0\\
+ & DA (L-BFGS-B) & 20.9045 & 21.0368 & 0.0000 & 21.0368 & 21.0368 & 0.0000 & 0.1322 & 1000.0\\
+ & DA (none) & 20.8748 & 21.0119 & 0.0160 & 20.9707 & 21.0359 & 0.0249 & 0.1371 & 1000.0\\
+ & BH (L-BFGS-B) & 20.9045 & 21.0368 & 0.0000 & 21.0368 & 21.0368 & 0.0000 & 0.1322 & 217.9\\
+ & BH (N--M) & 20.9045 & 21.0368 & 0.0000 & 21.0368 & 21.0368 & 0.0000 & 0.1322 & 368.1\\
+\midrule
+Direct K--J & DE (none) & 20.9798 & 20.9798 & 0.0350 & 20.8397 & 21.0247 & 0.0569 & --- & 170.0\\
+ & DA (L-BFGS-B) & 21.0368 & 21.0368 & 0.0000 & 21.0368 & 21.0368 & 0.0000 & --- & 1000.0\\
+ & DA (none) & 21.0093 & 21.0093 & 0.0159 & 20.9707 & 21.0351 & 0.0275 & --- & 1000.0\\
+ & BH (L-BFGS-B) & 21.0368 & 21.0368 & 0.0000 & 21.0368 & 21.0368 & 0.0000 & --- & 217.9\\
+ & BH (N--M) & 21.0368 & 21.0368 & 0.0000 & 21.0368 & 21.0368 & 0.0000 & --- & 363.2\\
+\bottomrule
+\end{tabularx}
+\end{adjustwidth}
+\end{table}
+
+\begin{table}[H]
+\caption{Computational cost on a common machine. Search-only cost is the mean wall-clock time and realized
+evaluations per run. End-to-end cost for 30 runs adds data generation (1,545 direct K--J calls, shared by the RF
+and MLP arms and counted once per arm here), model training and recalculation of the 30 returned candidates.
+Validation sets used only for error assessment are excluded. Times in ms on one machine. DE, Differential Evolution (polish=False); DA, Dual Annealing; BH, Basin-Hopping; local search in parentheses (N--M, Nelder--Mead).\label{tab6}}
+\begin{adjustwidth}{-\extralength}{0cm}
+\small
+\begin{tabularx}{\fulllength}{llCCCCC}
+\toprule
+\textbf{Solver} & \textbf{Objective} & \textbf{Search per run} & \textbf{NFEV per run} & \textbf{Setup} & \textbf{End-to-end, 30 runs} & \textbf{Direct K--J calls}\\
+\midrule
+DE (none) & RF & 635.4 & 198.0 & 319.0 & 19382.4 & 1575\\
+ & MLP & 20.5 & 182.0 & 1604.6 & 2218.6 & 1575\\
+ & Direct K--J & 7.3 & 170.0 & 0.0 & 219.6 & 5100\\
+\midrule
+DA (L-BFGS-B) & RF & 3177.7 & 1000.0 & 319.0 & 95650.7 & 1575\\
+ & MLP & 99.9 & 1000.0 & 1604.6 & 4601.8 & 1575\\
+ & Direct K--J & 35.5 & 1000.0 & 0.0 & 1065.4 & 30000\\
+\midrule
+DA (none) & RF & 3180.6 & 1000.0 & 319.0 & 95738.5 & 1575\\
+ & MLP & 100.4 & 1000.0 & 1604.6 & 4615.4 & 1575\\
+ & Direct K--J & 35.2 & 1000.0 & 0.0 & 1056.2 & 30000\\
+\midrule
+BH (L-BFGS-B) & RF & 411.3 & 123.0 & 319.0 & 12658.2 & 1575\\
+ & MLP & 36.7 & 217.9 & 1604.6 & 2705.7 & 1575\\
+ & Direct K--J & 19.5 & 217.9 & 0.0 & 583.7 & 6537\\
+\midrule
+BH (N--M) & RF & 1685.9 & 530.1 & 319.0 & 50897.6 & 1575\\
+ & MLP & 39.6 & 368.1 & 1604.6 & 2793.8 & 1575\\
+ & Direct K--J & 15.0 & 363.2 & 0.0 & 450.9 & 10897\\
+\bottomrule
+\end{tabularx}
+\end{adjustwidth}
+\end{table}
+
+\begin{table}[H]
+\caption{RF-score order and direct K--J order of the candidates returned by the 30 DE runs on the RF surface
+that share the maximum RF prediction (14 of 30 runs; identical unrounded RF value). Ranks are among all 30 runs;
+tied RF scores share the minimum rank. All 30 runs are listed in rf\_de\_ranking\_30runs.csv.\label{tab7}}
+\begin{tabularx}{\textwidth}{CCCCCCCC}
+\toprule
+\textbf{Seed} & \textbf{RDX \%} & \textbf{TNT \%} & \textbf{HTPB \%} & \textbf{RF $P$ (GPa)} & \textbf{K--J $P$ (GPa)} & \textbf{RF rank} & \textbf{K--J rank}\\
+\midrule
+0 & 74.55 & 10.44 & 15.01 & 21.0792 & 20.9833 & 1 & 16\\
+5 & 74.92 & 10.06 & 15.02 & 21.0792 & 21.0177 & 1 & 3\\
+7 & 74.72 & 10.25 & 15.02 & 21.0792 & 20.9945 & 1 & 10\\
+8 & 74.56 & 10.44 & 15.00 & 21.0792 & 20.9905 & 1 & 13\\
+9 & 74.56 & 10.44 & 15.00 & 21.0792 & 20.9909 & 1 & 12\\
+12 & 74.78 & 10.20 & 15.02 & 21.0792 & 21.0025 & 1 & 8\\
+15 & 74.60 & 10.37 & 15.02 & 21.0792 & 20.9833 & 1 & 17\\
+16 & 74.67 & 10.31 & 15.03 & 21.0792 & 20.9886 & 1 & 14\\
+18 & 74.90 & 10.09 & 15.01 & 21.0792 & 21.0201 & 1 & 2\\
+19 & 74.87 & 10.13 & 15.00 & 21.0792 & 21.0226 & 1 & 1\\
+20 & 74.90 & 10.08 & 15.03 & 21.0792 & 21.0122 & 1 & 6\\
+21 & 74.90 & 10.07 & 15.02 & 21.0792 & 21.0150 & 1 & 4\\
+26 & 74.87 & 10.11 & 15.02 & 21.0792 & 21.0135 & 1 & 5\\
+29 & 74.68 & 10.31 & 15.01 & 21.0792 & 20.9984 & 1 & 9\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\caption{Gap between the regional maximum of direct K--J pressure (21.0368 GPa) and the direct K--J pressure of the
+returned candidate, at equal budgets of direct K--J calls. Surrogate arms: $B$ Dirichlet draws (rejected draws
+included) used to train RF or MLP, search with the 1,000-evaluation cap and one recalculation ($B+1$ calls; five
+training sets $\times$ ten search seeds). Direct arm: the same solver with its evaluation cap set to $B$ (30 seeds);
+DE and BH terminated before the cap for $B \geq 200$ (mean 170 and 218 calls). Mean (SD) in GPa. DE, Differential
+Evolution (polish=False); BH, Basin-Hopping with L-BFGS-B.\label{tab8}}
+\begin{adjustwidth}{-\extralength}{0cm}
+\small
+\begin{tabularx}{\fulllength}{cCCCCCC}
+\toprule
+ & \multicolumn{3}{c}{\textbf{DE}} & \multicolumn{3}{c}{\textbf{BH (L-BFGS-B)}}\\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+\textbf{Budget $B$} & \textbf{RF} & \textbf{MLP} & \textbf{Direct K--J} & \textbf{RF} & \textbf{MLP} & \textbf{Direct K--J}\\
+\midrule
+25 & 0.885 (0.574) & 0.084 (0.045) & 0.596 (0.255) & 0.496 (0.543) & 0.000 (0.000) & 0.000 (0.000)\\
+50 & 0.735 (0.566) & 0.072 (0.035) & 0.349 (0.222) & 0.363 (0.419) & 0.000 (0.000) & 0.000 (0.000)\\
+100 & 0.339 (0.204) & 0.072 (0.041) & 0.149 (0.094) & 0.075 (0.128) & 0.000 (0.000) & 0.000 (0.000)\\
+200 & 0.352 (0.155) & 0.072 (0.041) & 0.058 (0.034) & 0.164 (0.228) & 0.000 (0.000) & 0.000 (0.000)\\
+400 & 0.219 (0.134) & 0.045 (0.025) & 0.057 (0.035) & 0.024 (0.065) & 0.000 (0.000) & 0.000 (0.000)\\
+800 & 0.120 (0.124) & 0.048 (0.025) & 0.057 (0.035) & 0.000 (0.002) & 0.000 (0.000) & 0.000 (0.000)\\
+1545 & 0.139 (0.106) & 0.047 (0.023) & 0.057 (0.035) & 0.005 (0.037) & 0.000 (0.000) & 0.000 (0.000)\\
+\bottomrule
+\end{tabularx}
+\end{adjustwidth}
+\end{table}
+
+\begin{table}[H]
+\caption{SHAP attributions for pressure on the 300 held-out compositions compared with the attributions of the
+K--J model that generated the targets. Default TreeSHAP evaluates the RF on coalitions whose mass fractions do not
+sum to one; the simplex-consistent explanation rescales every coalition to the simplex before evaluation, as the
+K--J implementation does. Kernel explanations use the same 100-composition background and enumerate all coalitions.
+Mean $|\mathrm{SHAP}|$ and RMSE in GPa; $r$, Pearson correlation with the K--J attributions.\label{tab9}}
+\begin{adjustwidth}{-\extralength}{0cm}
+\small
+\begin{tabularx}{\fulllength}{lCCCCCCCCC}
+\toprule
+ & \multicolumn{3}{c}{\textbf{Mean $|\mathrm{SHAP}|$}} & \multicolumn{3}{c}{\textbf{RMSE vs K--J}} & \multicolumn{3}{c}{\textbf{$r$ vs K--J}}\\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+\textbf{Explanation} & \textbf{RDX} & \textbf{TNT} & \textbf{HTPB} & \textbf{RDX} & \textbf{TNT} & \textbf{HTPB} & \textbf{RDX} & \textbf{TNT} & \textbf{HTPB}\\
+\midrule
+K--J model (reference) & 2.800 & 1.114 & 4.309 & --- & --- & --- & --- & --- & ---\\
+RF, default TreeSHAP & 1.339 & 0.066 & 5.604 & 1.877 & 1.509 & 1.861 & +0.935 & $-$0.803 & +0.985\\
+RF, simplex-consistent & 2.770 & 1.133 & 4.302 & 0.078 & 0.060 & 0.087 & +1.000 & +0.999 & +1.000\\
+MLP, simplex-consistent & 2.804 & 1.112 & 4.312 & 0.040 & 0.034 & 0.062 & +1.000 & +1.000 & +1.000\\
+\bottomrule
+\end{tabularx}
+\end{adjustwidth}
+\end{table}

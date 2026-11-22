@@ -1,36 +1,159 @@
-runfile('C:/Users/ASUS-WORKSTATION/Desktop/metin/Yılmaz/src4/PBX_RHO_optimizer.py', wdir='C:/Users/ASUS-WORKSTATION/Desktop/metin/Yılmaz/src4')
---- 1. Generating Thermochemical Datasets ---
+--- 0. Software Environment ---
+Python 3.10.20 | NumPy 2.0.1 | SciPy 1.15.2 | scikit-learn 1.7.2 | SHAP 0.48.0 | Windows-10-10.0.22000-SP0
+DE configuration: strategy=best1bin, popsize=10, maxiter=49, polish=False (explicit), seeds 0-29
+
+--- 1. Generating Thermochemical Datasets (Closed C-H-N-O Balance) ---
+Dirichlet draws: 1545 total | 1500 accepted (P > 0.1 GPa) | 45 rejected
 Full-simplex dataset: 1500 samples | Local constrained validation set: 300 samples
+Reference Pure RDX (100/0/0%) -> P: 35.25 GPa, D: 8914.43 m/s
+Reference High-HTPB Bound (55/20/25%) -> P: 14.95 GPa, D: 6252.38 m/s
 
 --- 2. Surrogate Model Benchmark Tests (Global Held-Out vs. Local Constrained) ---
-Ridge Regression     | Global -> R2: 0.9285, MAE: 1.746 GPa, RMSE: 2.139 GPa, MAPE: 82.31%
-                     | Local  -> R2: 0.3579, MAE: 1.240 GPa, RMSE: 1.371 GPa, MAPE: 7.51%
-MLP Neural Network   | Global -> R2: 0.9997, MAE: 0.092 GPa, RMSE: 0.139 GPa, MAPE: 1.91%
-                     | Local  -> R2: 0.9989, MAE: 0.042 GPa, RMSE: 0.058 GPa, MAPE: 0.24%
-Random Forest (RHO)  | Global -> R2: 0.9994, MAE: 0.128 GPa, RMSE: 0.202 GPa, MAPE: 1.77%
-                     | Local  -> R2: 0.9939, MAE: 0.103 GPa, RMSE: 0.134 GPa, MAPE: 0.58%
-RF Velocity (Local)  | Local  -> R2: 0.9964, MAE: 13.22 m/s, RMSE: 16.63 m/s
+Ridge Regression     | Global -> R2: 0.9366, MAE: 1.549 GPa, RMSE: 1.850 GPa, MAPE: 23.16%
+                     | Local  -> R2: -0.4486, MAE: 1.708 GPa, RMSE: 1.768 GPa, MAPE: 9.94%
+MLP Neural Network   | Global -> R2: 0.9998, MAE: 0.073 GPa, RMSE: 0.112 GPa, MAPE: 1.47%
+                     | Local  -> R2: 0.9967, MAE: 0.065 GPa, RMSE: 0.085 GPa, MAPE: 0.35%
+Random Forest (RHO)  | Global -> R2: 0.9994, MAE: 0.117 GPa, RMSE: 0.182 GPa, MAPE: 1.22%
+                     | Local  -> R2: 0.9937, MAE: 0.092 GPa, RMSE: 0.116 GPa, MAPE: 0.51%
+RF Velocity (Global) | Global -> R2: 0.9994, MAE: 25.95 m/s, RMSE: 37.20 m/s, MAPE: 0.55%
+RF Velocity (Local)  | Local  -> R2: 0.9959, MAE: 11.63 m/s, RMSE: 14.49 m/s, MAPE: 0.17%
 
---- 3. Budget-Matched Benchmark on Random Forest (Piecewise-Constant) Surrogate (30 Runs, Max NFEV=1000) ---
-DE (polish=False)            | Mean P: 21.0296 ± 0.0927 GPa | Best: (74.63/10.36/15.01%) [21.11 GPa] | Mean NFEV: 160.7 | Time: 391.6 ms | Reference
-Dual Annealing (L-BFGS-B)    | Mean P: 21.0618 ± 0.0839 GPa | Best: (74.69/10.30/15.02%) [21.11 GPa] | Mean NFEV: 1000.0 | Time: 2427.2 ms | p = 7.2670e-02
-Dual Annealing (No Local)    | Mean P: 21.0618 ± 0.0839 GPa | Best: (74.69/10.30/15.02%) [21.11 GPa] | Mean NFEV: 1000.0 | Time: 2325.3 ms | p = 7.2670e-02
-Basin-Hopping (L-BFGS-B)     | Mean P: 21.1075 ± 0.0001 GPa | Best: (74.67/10.33/15.00%) [21.11 GPa] | Mean NFEV: 123.0 | Time: 305.9 ms | p = 4.0424e-05
-Basin-Hopping (Nelder-Mead)  | Mean P: 21.1078 ± 0.0000 GPa | Best: (74.62/10.38/15.00%) [21.11 GPa] | Mean NFEV: 533.4 | Time: 1308.2 ms | p = 3.9539e-05
+--- 3. Evaluation-Cap Benchmark on Random Forest (Piecewise-Constant) Surrogate (30 Runs, Max NFEV=1000) ---
+DE (polish=False)            | Mean P: 21.0625 ± 0.0268 GPa | Best: (74.55/10.44/15.01%) [21.08 GPa] | Mean NFEV: 198.0 | Time: 635.4 ms
+Dual Annealing (L-BFGS-B)    | Mean P: 21.0642 ± 0.0313 GPa | Best: (74.48/10.51/15.01%) [21.08 GPa] | Mean NFEV: 1000.0 | Time: 3177.7 ms
+Dual Annealing (No Local)    | Mean P: 21.0642 ± 0.0313 GPa | Best: (74.48/10.51/15.01%) [21.08 GPa] | Mean NFEV: 1000.0 | Time: 3180.6 ms
+Basin-Hopping (L-BFGS-B)     | Mean P: 21.0774 ± 0.0008 GPa | Best: (74.67/10.33/15.00%) [21.08 GPa] | Mean NFEV: 123.0 | Time: 411.3 ms
+Basin-Hopping (Nelder-Mead)  | Mean P: 21.0792 ± 0.0000 GPa | Best: (74.62/10.38/15.00%) [21.08 GPa] | Mean NFEV: 530.1 | Time: 1685.9 ms
 
---- 3. Budget-Matched Benchmark on MLP Neural Network (Smooth Continuous) Surrogate (30 Runs, Max NFEV=1000) ---
-DE (polish=False)            | Mean P: 21.0246 ± 0.0399 GPa | Best: (74.92/10.08/15.01%) [21.07 GPa] | Mean NFEV: 173.3 | Time: 13.4 ms | Reference
-Dual Annealing (L-BFGS-B)    | Mean P: 21.0857 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [21.09 GPa] | Mean NFEV: 1000.0 | Time: 69.4 ms | p = 1.8626e-09
-Dual Annealing (No Local)    | Mean P: 21.0546 ± 0.0239 GPa | Best: (74.98/10.01/15.00%) [21.08 GPa] | Mean NFEV: 1000.0 | Time: 68.8 ms | p = 7.9790e-04
-Basin-Hopping (L-BFGS-B)     | Mean P: 21.0857 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [21.09 GPa] | Mean NFEV: 217.9 | Time: 25.2 ms | p = 1.8626e-09
-Basin-Hopping (Nelder-Mead)  | Mean P: 21.0857 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [21.09 GPa] | Mean NFEV: 368.1 | Time: 27.0 ms | p = 1.8626e-09
+--- 3. Evaluation-Cap Benchmark on MLP Neural Network (Smooth Continuous) Surrogate (30 Runs, Max NFEV=1000) ---
+DE (polish=False)            | Mean P: 20.8451 ± 0.0402 GPa | Best: (74.93/10.06/15.00%) [20.89 GPa] | Mean NFEV: 182.0 | Time: 20.5 ms
+Dual Annealing (L-BFGS-B)    | Mean P: 20.9045 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [20.90 GPa] | Mean NFEV: 1000.0 | Time: 99.9 ms
+Dual Annealing (No Local)    | Mean P: 20.8748 ± 0.0190 GPa | Best: (75.00/10.00/15.00%) [20.90 GPa] | Mean NFEV: 1000.0 | Time: 100.4 ms
+Basin-Hopping (L-BFGS-B)     | Mean P: 20.9045 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [20.90 GPa] | Mean NFEV: 217.9 | Time: 36.7 ms
+Basin-Hopping (Nelder-Mead)  | Mean P: 20.9045 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [20.90 GPa] | Mean NFEV: 368.1 | Time: 39.6 ms
 
 --- 4. Direct K-J Verification of Top-5 Distinct DE Candidates on RF Surrogate ---
-Rank 1: RDX=74.63%, TNT=10.36%, HTPB=15.01% | RF_P=21.11 GPa, Direct_KJ_P=20.99 GPa (|Diff|=0.12 GPa) | RF_D=7193.04 m/s, Direct_KJ_D=7194.10 m/s
-Rank 2: RDX=74.57%, TNT=10.42%, HTPB=15.02% | RF_P=21.11 GPa, Direct_KJ_P=20.98 GPa (|Diff|=0.12 GPa) | RF_D=7193.04 m/s, Direct_KJ_D=7193.13 m/s
-Rank 3: RDX=74.69%, TNT=10.31%, HTPB=15.00% | RF_P=21.11 GPa, Direct_KJ_P=21.00 GPa (|Diff|=0.11 GPa) | RF_D=7193.04 m/s, Direct_KJ_D=7195.94 m/s
-Rank 4: RDX=74.49%, TNT=10.51%, HTPB=15.00% | RF_P=21.11 GPa, Direct_KJ_P=20.98 GPa (|Diff|=0.13 GPa) | RF_D=7193.04 m/s, Direct_KJ_D=7192.84 m/s
-Rank 5: RDX=74.73%, TNT=10.26%, HTPB=15.01% | RF_P=21.11 GPa, Direct_KJ_P=21.00 GPa (|Diff|=0.10 GPa) | RF_D=7193.88 m/s, Direct_KJ_D=7196.20 m/s
+Rank 1: RDX=74.55%, TNT=10.44%, HTPB=15.01% | RF_P=21.08 GPa, Direct_KJ_P=20.98 GPa (|Diff|=0.10 GPa) | RF_D=7188.25 m/s, Direct_KJ_D=7193.03 m/s
+Rank 2: RDX=74.92%, TNT=10.06%, HTPB=15.02% | RF_P=21.08 GPa, Direct_KJ_P=21.02 GPa (|Diff|=0.06 GPa) | RF_D=7189.63 m/s, Direct_KJ_D=7198.34 m/s
+Rank 3: RDX=74.72%, TNT=10.25%, HTPB=15.02% | RF_P=21.08 GPa, Direct_KJ_P=20.99 GPa (|Diff|=0.08 GPa) | RF_D=7189.63 m/s, Direct_KJ_D=7194.83 m/s
+Rank 4: RDX=74.56%, TNT=10.44%, HTPB=15.00% | RF_P=21.08 GPa, Direct_KJ_P=20.99 GPa (|Diff|=0.09 GPa) | RF_D=7190.88 m/s, Direct_KJ_D=7194.05 m/s
+Rank 5: RDX=74.78%, TNT=10.20%, HTPB=15.02% | RF_P=21.08 GPa, Direct_KJ_P=21.00 GPa (|Diff|=0.08 GPa) | RF_D=7189.63 m/s, Direct_KJ_D=7196.03 m/s
 
 --- 5. Generating TreeSHAP Plots ---
 SHAP plots successfully saved.
+
+--- 6a. Evaluation-Cap Benchmark on Direct K-J (No Surrogate) Objective (30 Runs, Max NFEV=1000) ---
+DE (polish=False)            | Mean P: 20.9798 ± 0.0350 GPa | Best: (74.92/10.08/15.01%) [21.02 GPa] | Mean NFEV: 170.0 | Time: 7.3 ms
+Dual Annealing (L-BFGS-B)    | Mean P: 21.0368 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [21.04 GPa] | Mean NFEV: 1000.0 | Time: 35.5 ms
+Dual Annealing (No Local)    | Mean P: 21.0093 ± 0.0159 GPa | Best: (74.99/10.01/15.00%) [21.04 GPa] | Mean NFEV: 1000.0 | Time: 35.2 ms
+Basin-Hopping (L-BFGS-B)     | Mean P: 21.0368 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [21.04 GPa] | Mean NFEV: 217.9 | Time: 19.5 ms
+Basin-Hopping (Nelder-Mead)  | Mean P: 21.0368 ± 0.0000 GPa | Best: (75.00/10.00/15.00%) [21.04 GPa] | Mean NFEV: 363.2 | Time: 15.0 ms
+
+Reference (501x501 grid, direct K-J): max P = 21.0368 GPa at RDX/TNT/HTPB = 75.00/10.00/15.00%
+
+--- 6b. Direct K-J Pressure of the Candidate Returned by Each Run (30 runs per arm x solver) ---
+Search score = objective used during search (RF, MLP or direct K-J). Outcome = direct K-J P at returned candidate.
+SD uses ddof=0, as in Table 3.
+RF         | DE (polish=False)            | score 21.0625 | KJ_P 20.9660 ± 0.0505 [20.8069, 21.0226] GPa | gap 0.0707 | |score-KJ| 0.0965 | NFEV 198.0 | 635.4 ms | KJ calls/run 1.0
+RF         | Dual Annealing (L-BFGS-B)    | score 21.0642 | KJ_P 20.9919 ± 0.0194 [20.9390, 21.0273] GPa | gap 0.0449 | |score-KJ| 0.0723 | NFEV 1000.0 | 3177.7 ms | KJ calls/run 1.0
+RF         | Dual Annealing (No Local)    | score 21.0642 | KJ_P 20.9919 ± 0.0194 [20.9390, 21.0273] GPa | gap 0.0449 | |score-KJ| 0.0723 | NFEV 1000.0 | 3180.6 ms | KJ calls/run 1.0
+RF         | Basin-Hopping (L-BFGS-B)     | score 21.0774 | KJ_P 21.0331 ± 0.0103 [20.9909, 21.0368] GPa | gap 0.0037 | |score-KJ| 0.0443 | NFEV 123.0 | 411.3 ms | KJ calls/run 1.0
+RF         | Basin-Hopping (Nelder-Mead)  | score 21.0792 | KJ_P 20.9951 ± 0.0137 [20.9855, 21.0256] GPa | gap 0.0417 | |score-KJ| 0.0841 | NFEV 530.1 | 1685.9 ms | KJ calls/run 1.0
+MLP        | DE (polish=False)            | score 20.8451 | KJ_P 20.9876 ± 0.0332 [20.8933, 21.0277] GPa | gap 0.0491 | |score-KJ| 0.1426 | NFEV 182.0 | 20.5 ms | KJ calls/run 1.0
+MLP        | Dual Annealing (L-BFGS-B)    | score 20.9045 | KJ_P 21.0368 ± 0.0000 [21.0368, 21.0368] GPa | gap 0.0000 | |score-KJ| 0.1322 | NFEV 1000.0 | 99.9 ms | KJ calls/run 1.0
+MLP        | Dual Annealing (No Local)    | score 20.8748 | KJ_P 21.0119 ± 0.0160 [20.9707, 21.0359] GPa | gap 0.0249 | |score-KJ| 0.1371 | NFEV 1000.0 | 100.4 ms | KJ calls/run 1.0
+MLP        | Basin-Hopping (L-BFGS-B)     | score 20.9045 | KJ_P 21.0368 ± 0.0000 [21.0368, 21.0368] GPa | gap 0.0000 | |score-KJ| 0.1322 | NFEV 217.9 | 36.7 ms | KJ calls/run 1.0
+MLP        | Basin-Hopping (Nelder-Mead)  | score 20.9045 | KJ_P 21.0368 ± 0.0000 [21.0368, 21.0368] GPa | gap 0.0000 | |score-KJ| 0.1322 | NFEV 368.1 | 39.6 ms | KJ calls/run 1.0
+Direct K-J | DE (polish=False)            | score 20.9798 | KJ_P 20.9798 ± 0.0350 [20.8397, 21.0247] GPa | gap 0.0569 | |score-KJ| 0 (n/a) | NFEV 170.0 | 7.3 ms | KJ calls/run 170.0
+Direct K-J | Dual Annealing (L-BFGS-B)    | score 21.0368 | KJ_P 21.0368 ± 0.0000 [21.0368, 21.0368] GPa | gap 0.0000 | |score-KJ| 0 (n/a) | NFEV 1000.0 | 35.5 ms | KJ calls/run 1000.0
+Direct K-J | Dual Annealing (No Local)    | score 21.0093 | KJ_P 21.0093 ± 0.0159 [20.9707, 21.0351] GPa | gap 0.0275 | |score-KJ| 0 (n/a) | NFEV 1000.0 | 35.2 ms | KJ calls/run 1000.0
+Direct K-J | Basin-Hopping (L-BFGS-B)     | score 21.0368 | KJ_P 21.0368 ± 0.0000 [21.0368, 21.0368] GPa | gap 0.0000 | |score-KJ| 0 (n/a) | NFEV 217.9 | 19.5 ms | KJ calls/run 217.9
+Direct K-J | Basin-Hopping (Nelder-Mead)  | score 21.0368 | KJ_P 21.0368 ± 0.0000 [21.0368, 21.0368] GPa | gap 0.0000 | |score-KJ| 0 (n/a) | NFEV 363.2 | 15.0 ms | KJ calls/run 363.2
+
+--- 7. RF-Score Ranking vs Direct K-J Ranking (RF surface, DE, all 30 runs) ---
+Distinct RF scores among 30 runs: 9 (RF plateaus produce ties)
+Runs sharing the maximum RF score (21.0791564426 GPa, bit-identical): 14/30 | their direct K-J P: 20.9833-21.0226 GPa (mean 21.0024)
+Note: the five distinct candidates of Section 4 all belong to this tied set; their order there is the
+      stable-sort (seed) order, not a difference in RF-predicted pressure.
+Spearman rho (RF score vs K-J P) = 0.838 | Kendall tau-b = 0.681
+Run with highest RF score: seed 0, RF 21.0792, K-J 20.9833 GPa (K-J rank 16/30)
+Run with highest K-J P:    seed 19, RF 21.0792, K-J 21.0226 GPa (RF rank 1/30)
+RF score - K-J P over 30 runs: mean 0.0965, min 0.0494, max 0.1838 GPa (positive = RF over-predicts at the selected point)
+RF arm, all solvers (n=150): mean (score - K-J) = 0.0739 GPa; fraction over-predicted = 1.000
+MLP arm, all solvers (n=150): mean (score - K-J) = -0.1353 GPa; fraction over-predicted = 0.000
+
+--- 8. Computational Cost (wall-clock, this machine) ---
+Per-call time: direct K-J 7.7 us | RF predict 3178.3 us | MLP predict 55.8 us
+Shared setup (counted once for RF and MLP): data generation 22.6 ms (1545 direct K-J calls, 45 rejected draws)
+Training: RF pressure 296.4 ms | MLP pressure 1582.0 ms | RF velocity 295.4 ms (reporting only)
+Evaluation-only sets (300 local + 300 held-out) are excluded from search cost.
+DE (polish=False)            | RF         | search    635.4 ms/run (NFEV  198.0) | setup    319.0 ms | 30-run end-to-end   19382.4 ms | direct K-J calls   1575
+DE (polish=False)            | MLP        | search     20.5 ms/run (NFEV  182.0) | setup   1604.6 ms | 30-run end-to-end    2218.6 ms | direct K-J calls   1575
+DE (polish=False)            | Direct K-J | search      7.3 ms/run (NFEV  170.0) | setup      0.0 ms | 30-run end-to-end     219.6 ms | direct K-J calls   5100
+Dual Annealing (L-BFGS-B)    | RF         | search   3177.7 ms/run (NFEV 1000.0) | setup    319.0 ms | 30-run end-to-end   95650.7 ms | direct K-J calls   1575
+Dual Annealing (L-BFGS-B)    | MLP        | search     99.9 ms/run (NFEV 1000.0) | setup   1604.6 ms | 30-run end-to-end    4601.8 ms | direct K-J calls   1575
+Dual Annealing (L-BFGS-B)    | Direct K-J | search     35.5 ms/run (NFEV 1000.0) | setup      0.0 ms | 30-run end-to-end    1065.4 ms | direct K-J calls  30000
+Dual Annealing (No Local)    | RF         | search   3180.6 ms/run (NFEV 1000.0) | setup    319.0 ms | 30-run end-to-end   95738.5 ms | direct K-J calls   1575
+Dual Annealing (No Local)    | MLP        | search    100.4 ms/run (NFEV 1000.0) | setup   1604.6 ms | 30-run end-to-end    4615.4 ms | direct K-J calls   1575
+Dual Annealing (No Local)    | Direct K-J | search     35.2 ms/run (NFEV 1000.0) | setup      0.0 ms | 30-run end-to-end    1056.2 ms | direct K-J calls  30000
+Basin-Hopping (L-BFGS-B)     | RF         | search    411.3 ms/run (NFEV  123.0) | setup    319.0 ms | 30-run end-to-end   12658.2 ms | direct K-J calls   1575
+Basin-Hopping (L-BFGS-B)     | MLP        | search     36.7 ms/run (NFEV  217.9) | setup   1604.6 ms | 30-run end-to-end    2705.7 ms | direct K-J calls   1575
+Basin-Hopping (L-BFGS-B)     | Direct K-J | search     19.5 ms/run (NFEV  217.9) | setup      0.0 ms | 30-run end-to-end     583.7 ms | direct K-J calls   6537
+Basin-Hopping (Nelder-Mead)  | RF         | search   1685.9 ms/run (NFEV  530.1) | setup    319.0 ms | 30-run end-to-end   50897.6 ms | direct K-J calls   1575
+Basin-Hopping (Nelder-Mead)  | MLP        | search     39.6 ms/run (NFEV  368.1) | setup   1604.6 ms | 30-run end-to-end    2793.8 ms | direct K-J calls   1575
+Basin-Hopping (Nelder-Mead)  | Direct K-J | search     15.0 ms/run (NFEV  363.2) | setup      0.0 ms | 30-run end-to-end     450.9 ms | direct K-J calls  10897
+RF + MLP arms together: shared data generation counted once -> combined setup 1901.0 ms
+Saved: run_level_candidates.csv, common_outcome_summary.csv, rf_de_ranking_30runs.csv, cost_summary.csv
+
+--- 9. Equal Direct K-J Call Budget: Surrogate-Assisted vs Direct Search ---
+Surrogate arm: 5 training sets x 10 search seeds per budget; direct arm: 30 seeds per budget. Elapsed 376.9 s
+Gap = max direct K-J P in region (21.0368 GPa) - direct K-J P at returned candidate; mean +/- SD (ddof=0)
+B=   25 | Direct K-J | Basin-Hopping (L-BFGS-B)   | n=30 | train     0.0 | K-J calls    25.0 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=   25 | Direct K-J | DE (polish=False)          | n=30 | train     0.0 | K-J calls    25.0 | K-J P 20.4403 | gap 0.5965 +/- 0.2546 (max 1.0095) | within 0.01 GPa: 0.00
+B=   25 | MLP        | Basin-Hopping (L-BFGS-B)   | n=50 | train    23.6 | K-J calls    26.0 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=   25 | MLP        | DE (polish=False)          | n=50 | train    23.6 | K-J calls    26.0 | K-J P 20.9525 | gap 0.0843 +/- 0.0449 (max 0.2664) | within 0.01 GPa: 0.00
+B=   25 | RF         | Basin-Hopping (L-BFGS-B)   | n=50 | train    23.6 | K-J calls    26.0 | K-J P 20.5409 | gap 0.4959 +/- 0.5429 (max 2.5277) | within 0.01 GPa: 0.46
+B=   25 | RF         | DE (polish=False)          | n=50 | train    23.6 | K-J calls    26.0 | K-J P 20.1519 | gap 0.8849 +/- 0.5739 (max 2.4493) | within 0.01 GPa: 0.00
+B=   50 | Direct K-J | Basin-Hopping (L-BFGS-B)   | n=30 | train     0.0 | K-J calls    50.0 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=   50 | Direct K-J | DE (polish=False)          | n=30 | train     0.0 | K-J calls    50.0 | K-J P 20.6882 | gap 0.3486 +/- 0.2219 (max 0.7892) | within 0.01 GPa: 0.00
+B=   50 | MLP        | Basin-Hopping (L-BFGS-B)   | n=50 | train    47.8 | K-J calls    51.0 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=   50 | MLP        | DE (polish=False)          | n=50 | train    47.8 | K-J calls    51.0 | K-J P 20.9648 | gap 0.0719 +/- 0.0347 (max 0.1420) | within 0.01 GPa: 0.00
+B=   50 | RF         | Basin-Hopping (L-BFGS-B)   | n=50 | train    47.8 | K-J calls    51.0 | K-J P 20.6733 | gap 0.3635 +/- 0.4190 (max 1.3782) | within 0.01 GPa: 0.44
+B=   50 | RF         | DE (polish=False)          | n=50 | train    47.8 | K-J calls    51.0 | K-J P 20.3014 | gap 0.7354 +/- 0.5656 (max 1.9271) | within 0.01 GPa: 0.02
+B=  100 | Direct K-J | Basin-Hopping (L-BFGS-B)   | n=30 | train     0.0 | K-J calls   100.0 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=  100 | Direct K-J | DE (polish=False)          | n=30 | train     0.0 | K-J calls   100.0 | K-J P 20.8877 | gap 0.1491 +/- 0.0935 (max 0.3577) | within 0.01 GPa: 0.00
+B=  100 | MLP        | Basin-Hopping (L-BFGS-B)   | n=50 | train    96.2 | K-J calls   101.0 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=  100 | MLP        | DE (polish=False)          | n=50 | train    96.2 | K-J calls   101.0 | K-J P 20.9645 | gap 0.0723 +/- 0.0409 (max 0.2664) | within 0.01 GPa: 0.00
+B=  100 | RF         | Basin-Hopping (L-BFGS-B)   | n=50 | train    96.2 | K-J calls   101.0 | K-J P 20.9618 | gap 0.0749 +/- 0.1275 (max 0.5411) | within 0.01 GPa: 0.62
+B=  100 | RF         | DE (polish=False)          | n=50 | train    96.2 | K-J calls   101.0 | K-J P 20.6979 | gap 0.3389 +/- 0.2041 (max 0.8612) | within 0.01 GPa: 0.00
+B=  200 | Direct K-J | Basin-Hopping (L-BFGS-B)   | n=30 | train     0.0 | K-J calls   199.8 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=  200 | Direct K-J | DE (polish=False)          | n=30 | train     0.0 | K-J calls   166.7 | K-J P 20.9792 | gap 0.0576 +/- 0.0344 (max 0.1971) | within 0.01 GPa: 0.00
+B=  200 | MLP        | Basin-Hopping (L-BFGS-B)   | n=50 | train   193.2 | K-J calls   201.0 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=  200 | MLP        | DE (polish=False)          | n=50 | train   193.2 | K-J calls   201.0 | K-J P 20.9645 | gap 0.0722 +/- 0.0406 (max 0.2664) | within 0.01 GPa: 0.00
+B=  200 | RF         | Basin-Hopping (L-BFGS-B)   | n=50 | train   193.2 | K-J calls   201.0 | K-J P 20.8726 | gap 0.1642 +/- 0.2285 (max 0.9262) | within 0.01 GPa: 0.48
+B=  200 | RF         | DE (polish=False)          | n=50 | train   193.2 | K-J calls   201.0 | K-J P 20.6843 | gap 0.3525 +/- 0.1551 (max 0.6708) | within 0.01 GPa: 0.00
+B=  400 | Direct K-J | Basin-Hopping (L-BFGS-B)   | n=30 | train     0.0 | K-J calls   217.9 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=  400 | Direct K-J | DE (polish=False)          | n=30 | train     0.0 | K-J calls   170.0 | K-J P 20.9798 | gap 0.0569 +/- 0.0350 (max 0.1971) | within 0.01 GPa: 0.00
+B=  400 | MLP        | Basin-Hopping (L-BFGS-B)   | n=50 | train   388.4 | K-J calls   401.0 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=  400 | MLP        | DE (polish=False)          | n=50 | train   388.4 | K-J calls   401.0 | K-J P 20.9919 | gap 0.0449 +/- 0.0250 (max 0.1016) | within 0.01 GPa: 0.02
+B=  400 | RF         | Basin-Hopping (L-BFGS-B)   | n=50 | train   388.4 | K-J calls   401.0 | K-J P 21.0129 | gap 0.0239 +/- 0.0651 (max 0.3107) | within 0.01 GPa: 0.82
+B=  400 | RF         | DE (polish=False)          | n=50 | train   388.4 | K-J calls   401.0 | K-J P 20.8174 | gap 0.2193 +/- 0.1336 (max 0.5868) | within 0.01 GPa: 0.00
+B=  800 | Direct K-J | Basin-Hopping (L-BFGS-B)   | n=30 | train     0.0 | K-J calls   217.9 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=  800 | Direct K-J | DE (polish=False)          | n=30 | train     0.0 | K-J calls   170.0 | K-J P 20.9798 | gap 0.0569 +/- 0.0350 (max 0.1971) | within 0.01 GPa: 0.00
+B=  800 | MLP        | Basin-Hopping (L-BFGS-B)   | n=50 | train   777.2 | K-J calls   801.0 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B=  800 | MLP        | DE (polish=False)          | n=50 | train   777.2 | K-J calls   801.0 | K-J P 20.9883 | gap 0.0485 +/- 0.0246 (max 0.1016) | within 0.01 GPa: 0.00
+B=  800 | RF         | Basin-Hopping (L-BFGS-B)   | n=50 | train   777.2 | K-J calls   801.0 | K-J P 21.0363 | gap 0.0005 +/- 0.0023 (max 0.0115) | within 0.01 GPa: 0.96
+B=  800 | RF         | DE (polish=False)          | n=50 | train   777.2 | K-J calls   801.0 | K-J P 20.9168 | gap 0.1199 +/- 0.1244 (max 0.6896) | within 0.01 GPa: 0.06
+B= 1545 | Direct K-J | Basin-Hopping (L-BFGS-B)   | n=30 | train     0.0 | K-J calls   217.9 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B= 1545 | Direct K-J | DE (polish=False)          | n=30 | train     0.0 | K-J calls   170.0 | K-J P 20.9798 | gap 0.0569 +/- 0.0350 (max 0.1971) | within 0.01 GPa: 0.00
+B= 1545 | MLP        | Basin-Hopping (L-BFGS-B)   | n=50 | train  1499.4 | K-J calls  1546.0 | K-J P 21.0368 | gap 0.0000 +/- 0.0000 (max 0.0000) | within 0.01 GPa: 1.00
+B= 1545 | MLP        | DE (polish=False)          | n=50 | train  1499.4 | K-J calls  1546.0 | K-J P 20.9896 | gap 0.0472 +/- 0.0229 (max 0.1016) | within 0.01 GPa: 0.00
+B= 1545 | RF         | Basin-Hopping (L-BFGS-B)   | n=50 | train  1499.4 | K-J calls  1546.0 | K-J P 21.0314 | gap 0.0054 +/- 0.0375 (max 0.2676) | within 0.01 GPa: 0.98
+B= 1545 | RF         | DE (polish=False)          | n=50 | train  1499.4 | K-J calls  1546.0 | K-J P 20.8977 | gap 0.1390 +/- 0.1060 (max 0.4147) | within 0.01 GPa: 0.00
+
+--- 10. SHAP Attributions vs Attributions of the Known K-J Model (Pressure, 300 Held-Out Compositions) ---
+K-J model (reference)          | mean|SHAP| (GPa) RDX: 2.800 | TNT: 1.114 | HTPB: 4.309 | 1.7 s
+RF, TreeSHAP default (Fig. 7)  | mean|SHAP| (GPa) RDX: 1.339 | TNT: 0.066 | HTPB: 5.604 || RMSE vs K-J 1.877, 1.509, 1.861 || r vs K-J +0.935, -0.803, +0.985 | 1.4 s
+RF, simplex-consistent         | mean|SHAP| (GPa) RDX: 2.770 | TNT: 1.133 | HTPB: 4.302 || RMSE vs K-J 0.078, 0.060, 0.087 || r vs K-J +1.000, +0.999, +1.000 | 4.0 s
+MLP, simplex-consistent        | mean|SHAP| (GPa) RDX: 2.804 | TNT: 1.112 | HTPB: 4.312 || RMSE vs K-J 0.040, 0.034, 0.062 || r vs K-J +1.000, +1.000, +1.000 | 0.5 s
+Background: 100 training compositions (shap.sample, random_state=0). Saved: shap_comparison_summary.csv, shap_comparison_values.csv

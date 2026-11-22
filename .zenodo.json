@@ -1,0 +1,35 @@
+{
+  "title": "RHO-Explosive-Design: code, logs and run-level records for a known-optimum benchmark of surrogate-assisted search for RDX/TNT/HTPB formulations",
+  "version": "1.1.0",
+  "upload_type": "software",
+  "description": "Code, execution log, run-level candidate records and figure scripts accompanying the manuscript 'Surrogate-Assisted Search for RDX/TNT/HTPB Formulations Using Thermochemical Simulations: A Known-Optimum Benchmark of Surrogate Topology, Thermochemical-Call Efficiency and Explanation Fidelity' (Processes, processes-4701050). Version 1.1.0 replaces v1.0.0: the Kamlet-Jacobs product allocation now conserves C, H, N and O, and all data, models and results were regenerated. Adds a direct Kamlet-Jacobs search arm, recalculation of the candidate returned by every run, an equal thermochemical-call budget comparison, a comparison of SHAP attributions with the known Kamlet-Jacobs model, and a check of the Differential Evolution polishing setting. All targets are theoretical; no experimental data are used.",
+  "creators": [
+    {
+      "name": "Mert, Yılmaz",
+      "affiliation": "Sivas University of Science and Technology"
+    },
+    {
+      "name": "Zontul, Metin",
+      "affiliation": "Sivas University of Science and Technology"
+    },
+    {
+      "name": "Karateke, Seda",
+      "affiliation": "Istanbul Atlas University"
+    },
+    {
+      "name": "Cifci, Mehmet Akif",
+      "affiliation": "Bandırma Onyedi Eylül University"
+    }
+  ],
+  "keywords": [
+    "surrogate-assisted optimization",
+    "known-optimum benchmark",
+    "RDX/TNT/HTPB",
+    "Kamlet-Jacobs equations",
+    "random forest",
+    "multilayer perceptron",
+    "differential evolution",
+    "TreeSHAP"
+  ],
+  "license": "MIT"
+}
